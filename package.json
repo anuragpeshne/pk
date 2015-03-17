@@ -1,0 +1,25 @@
+{
+  "name": "pk",
+  "version": "1.0.0",
+  "description": "id3 tags cleaner",
+  "main": "main.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/anuragpeshne/pk.git"
+  },
+  "dependencies": {
+  	"id3js": "1.1.3"
+  },
+  "keywords": [
+    "id3"
+  ],
+  "author": "anurag peshne",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/anuragpeshne/pk/issues"
+  },
+  "homepage": "https://github.com/anuragpeshne/pk"
+}
