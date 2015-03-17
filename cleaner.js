@@ -1,24 +1,22 @@
 var cleaner = {
-	clean: function(tags) {
-		console.log(tags)
-		var tag;
-		for (tag in tags) {
-			if(tags.hasOwnProperty(tag)) {
-				if(typeof(tags[tag]) === 'object') {
-					this.clean(tags[tag]);
-				} else if(typeof(tags[tag]) == 'string') {
-					tags[tag] = this.regexCleaner(tags[tag]);
-				} else
-					;//console.log(typeof(tags[tag]));
+	clean: function(obj) {
+		if(typeof(obj) === 'object') {
+			var prop;
+			for (prop in obj) {
+				if(obj.hasOwnProperty(prop)) {
+					if(typeof(obj[prop]) === 'string')
+						obj[prop] = this.regexCleaner(obj[prop]);
+					else if(typeof(obj[prop]) === 'object')
+						this.clean(obj[prop]);
+				}
 			}
 		}
-		return tags;
+		return obj;
 	},
 
 	regexCleaner: function(tag) {
-		var siteRE = /(?:www)?.\w+.\w+/;
-		console.log('as' + tag);
-		return tag.replace(siteRE, '');
+		var siteRE = /\[?(?:www\.)?\w+\.\w+\]?/;
+		return tag.replace(siteRE, '').trim();
 	}
 }
 
