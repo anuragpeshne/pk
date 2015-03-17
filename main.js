@@ -1,7 +1,19 @@
+var fs = require('fs');
 var reader = require('./reader.js');
 var cleaner = require('./cleaner.js');
+var utilities = require('./utilites.js');
 
-var song = './trainingLibrary/1- Sooraj Dooba Hain - Roy - [Songspk.CC].mp3';
-reader.readTags(song, function(tags) {
-	console.log(cleaner.clean(tags));
+var trainingLib = './trainingLibrary';
+
+fs.readdir(trainingLib, function(err, files) {
+	var newFiles = files.filter(utilities.isMP3)
+											.map(function(song) {
+												reader.readTags(trainingLib + '/' + song,
+													function(tags) {
+														console.log( cleaner.clean(tags));
+													});
+												return cleaner.cleanName(song);
+											});
+	console.log(newFiles);
 });
+

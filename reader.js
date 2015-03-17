@@ -8,11 +8,11 @@ var reader = {
 
 					callback(tags);
 				}
-		);
+			 );
 	},
 
 	readDir : function(dirPath) {
-	
+
 	}
 }
 
