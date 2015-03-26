@@ -11,8 +11,9 @@
     "url": "https://github.com/anuragpeshne/pk.git"
   },
   "dependencies": {
-  	"id3js": "1.1.3",
-		"mongodb": "~2.0"
+    "id3js": "1.1.3",
+    "mongodb": "~2.0",
+    "nodeunit": "^0.9.1"
   },
   "keywords": [
     "id3"

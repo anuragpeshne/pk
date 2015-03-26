@@ -8,17 +8,18 @@ var utilities = {
 
 	calDifference: function(metadata1, metadata2) {
 		var iiF, diff = 0;
-		for(iiF = 0; iiF < interestingFields.length; iiF++) {
-			var field1 = metadata1[interestingFields[iiF]] || '';
-			var field2 = metadata2[interestingFields[iiF]] || '';
+		for(iiF = 0; iiF < this.interestingFields.length; iiF++) {
+			var field1 = metadata1[this.interestingFields[iiF]] || '';
+			var field2 = metadata2[this.interestingFields[iiF]] || '';
 
-			diff = diff + stringDiff(field1, field2);
+			diff = diff + this.stringDiff(field1, field2);
 		}
 		return diff;
 	},
 
 	stringDiff: function(string1, string2) {
-		var i, j, diff = 0;
+		var i, j, diff;
+		i = j = diff = 0;
 		while(i < string1.length && j < string2.length) {
 			if(string1.charAt(i) !== string2.charAt(j)) {
 				diff++;
@@ -26,9 +27,9 @@ var utilities = {
 			i++, j++;
 		}
 
-		return (string1.length - (i - 1) 
+		return (string1.length - i 
 				+ diff
-				+ string2.length - (j - 2)
+				+ string2.length - j 
 				);
 	},
 }
