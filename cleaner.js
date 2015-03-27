@@ -1,6 +1,8 @@
 var cleaner = {
   siteNameRE : /[ -]*\[?(?:http:\/\/)?(?:www\.)?\w+\.\w+\]?/,
   fileNamePrefixRE: /^(?:\d{2} )/,
+  mp3RE: /\.mp3$/, 
+  
   clean: function(obj) {
     if(typeof(obj) === 'object') {
       var prop;
@@ -17,7 +19,7 @@ var cleaner = {
   },
 
   regexCleaner: function(tag) {
-    return tag.replace(this.siteNameRE, '').trim();
+    return tag.replace(this.mp3RE, '').replace(this.siteNameRE, '').trim();
   },
   cleanName : function(fileName) {
     return fileName.substring(0, fileName.length - 4)           // remove extension

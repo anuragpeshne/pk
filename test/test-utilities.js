@@ -36,5 +36,10 @@ exports.calDiff = function(test) {
     }  
   }
   test.equal(utilities.calDifference(origMetaData, expectedMetaData), 80);
+
+  delete(origMetaData.artist);
+  delete(expectedMetaData.artist);
+  test.equal(typeof(utilities.calDifference(origMetaData, expectedMetaData)),
+    'number');
   test.done();
 };
