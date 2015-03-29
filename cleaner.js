@@ -1,20 +1,15 @@
+var utilities = require('./utilites.js');
+
 var cleaner = {
   siteNameRE : /[ -]*\[?(?:http:\/\/)?(?:www\.)?\w+\.\w+\]?/,
   fileNamePrefixRE: /^(?:\d{2} )/,
-  mp3RE: /\.mp3$/, 
-  
+  mp3RE: /\.mp3$/,
+
   clean: function(obj) {
-    if(typeof(obj) === 'object') {
-      var prop;
-      for (prop in obj) {
-        if(obj.hasOwnProperty(prop)) {
-          if(typeof(obj[prop]) === 'string')
-            obj[prop] = this.regexCleaner(obj[prop]);
-          else if(typeof(obj[prop]) === 'object')
-            this.clean(obj[prop]);
-        }
-      }
-    }
+    var that = this;
+    utilities.metadataMap(obj, function(obj) {
+      return that.regexCleaner(obj);
+    });
     return obj;
   },
 
@@ -25,7 +20,7 @@ var cleaner = {
     return fileName.substring(0, fileName.length - 4)           // remove extension
                    .replace(this.siteNameRE, '')
                    .replace(this.fileNamePrefixRE, '')
-                   .trim() + 
+                   .trim() +
                    fileName.substring(fileName.length - 4); //put extension back
   }
 }

@@ -4,7 +4,7 @@
   "description": "id3 tags cleaner",
   "main": "main.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "nodeunit"
   },
   "repository": {
     "type": "git",

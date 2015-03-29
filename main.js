@@ -10,8 +10,10 @@ fs.readdir(trainingLib, function(err, files) {
                       .map(function(song) {
                         reader.readTags(trainingLib + '/' + song,
                           function(tags) {
-                            console.log(tags);
-                            //console.log( cleaner.clean(tags));
+                            var origTags = tags;
+                            var cleanedTags = cleaner.clean(tags);
+                            console.log(utilities.calDifference(origTags,
+                                cleanedTags));
                           });
                         return cleaner.cleanName(song);
                       });

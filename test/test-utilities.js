@@ -18,8 +18,7 @@ exports.calDiff = function(test) {
     image: { type: 'other',
       mime: 'image/jpeg',
       description: 'SongsKingArt.jpg',
-      data: [Object] 
-    }  
+    }
   };
 
   var expectedMetaData = {
@@ -32,8 +31,7 @@ exports.calDiff = function(test) {
     image: { type: 'other',
       mime: 'image/jpeg',
       description: 'SongsKingArt.jpg',
-      data: [Object] 
-    }  
+    }
   }
   test.equal(utilities.calDifference(origMetaData, expectedMetaData), 80);
 
@@ -41,5 +39,63 @@ exports.calDiff = function(test) {
   delete(expectedMetaData.artist);
   test.equal(typeof(utilities.calDifference(origMetaData, expectedMetaData)),
     'number');
+  test.done();
+};
+
+exports.metadataMap = function(test) {
+  var origMetada = {
+    title: 'Kaise Bataaoon',
+    album: '',
+    artist: '',
+    year: '2013',
+    v1: { title: 'Kaise Bataaoon.',
+      artist: '',
+      album: '',
+      year: '2013',
+      comment: 'Get Letest Songs by SongsKing.',
+      track: null,
+      genre: null },
+    v2: {
+      title: 'Kaise Bataaoon',
+      artist: '- Get Letest Free Songs Download',
+      album: '',
+      genre: '',
+      comments: 'Get Letest Songs by',
+      image: { type: 'other',
+        mime: 'image/jpeg',
+        description: '',
+      }
+    }
+  }
+  var expectedMetaData = {
+    title: '',
+    album: '',
+    artist: '',
+    year: '',
+    v1: { title: '',
+      artist: '',
+      album: '',
+      year: '',
+      comment: '',
+      track: null,
+      genre: null },
+    v2: {
+      title: '',
+      artist: '',
+      album: '',
+      genre: '',
+      comments: '',
+      image: { type: '',
+        mime: '',
+        description: '',
+      }
+    }
+  }
+
+  var calMetadata = utilities.metadataMap(origMetada, function(metaTag) {
+    return '';
+  });
+
+  test.equal(JSON.stringify(calMetadata), JSON.stringify(expectedMetaData));
   test.done();
 };

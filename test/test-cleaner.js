@@ -13,10 +13,9 @@ exports.clean = function(test) {
     image: { type: 'other',
       mime: 'image/jpeg',
       description: 'SongsKingArt.jpg',
-      data: [Object] 
-    }  
+    }
   };
- 
+
   var processedMetaData = cleaner.clean(origMetaData);
 
   var i, origMetaField, processedMetaField;
