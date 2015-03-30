@@ -5,7 +5,11 @@ var cleaner = {
   fileNamePrefixRE: /^(?:\d{2} )/,
   mp3RE: /\.mp3$/,
 
-  clean: function(obj) {
+  clean: function(origObj) {
+    // Since we are mutating members, we better duplicate the obj and work on it
+    // This is a fast method to clone obj
+    obj = JSON.parse(JSON.stringify(origObj));
+
     var that = this;
     utilities.metadataMap(obj, function(obj) {
       return that.regexCleaner(obj);
