@@ -1,7 +1,10 @@
 var fs = require('fs');
+var readline = require('readline');
+
 var reader = require('./reader.js');
 var cleaner = require('./cleaner.js');
 var utilities = require('./utilites.js');
+var trainer = require('./ml/trainer.js');
 
 var trainingLib = './trainingLibrary';
 
@@ -19,11 +22,28 @@ var processFile = function(song) {
 fs.readdir(trainingLib, function(err, files) {
   if (typeof(process.argv[2]) !== 'undefined' &&
     process.argv[2].toLowerCase() === 'debug') {
-    DEBUG = 1;
-  }
+      DEBUG = 1;
+      console.log("*DEBUG MODE*");
 
-  var newFiles = files.filter(utilities.isMP3)
+      var sampleTags = [{
+        version: [ 3, 0 ],
+        title: 'Kaise Bataaoon [SongsKing.iN].mp3',
+        artist: 'SongsKing.iN - Get Letest Free Songs Download',
+        album: 'www.SongsKing.in',
+        genre: 'SongsKing.iN',
+        comments: 'Get Letest Songs by SongsKing.iN',
+        image: { type: 'other',
+          mime: 'image/jpeg',
+          description: 'SongsKingArt.jpg',
+        }
+      }]; 
+      var trainedTags = trainer.train(sampleTags);
+      console.log(trainedTags);
+
+    } else {
+      var newFiles = files.filter(utilities.isMP3)
                       .map(processFile);
-  console.log(newFiles);
+      console.log(newFiles);
+  }
 });
 

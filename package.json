@@ -13,7 +13,8 @@
   "dependencies": {
     "id3js": "1.1.3",
     "mongodb": "~2.0",
-    "nodeunit": "^0.9.1"
+    "nodeunit": "^0.9.1",
+    "readline-sync": "^0.8.0"
   },
   "keywords": [
     "id3"

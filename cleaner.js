@@ -11,7 +11,7 @@ var cleaner = {
     obj = JSON.parse(JSON.stringify(origObj));
 
     var that = this;
-    utilities.metadataMap(obj, function(obj) {
+    utilities.metadataMap(obj, function(prop, obj) {
       return that.regexCleaner(obj);
     });
     return obj;

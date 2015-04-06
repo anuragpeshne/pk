@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var utilities = {
   isMP3 : function(file) {
     return (typeof(file.split('.')[1]) !== 'undefined') &&
@@ -51,14 +53,15 @@ var utilities = {
       for (prop in metadata) {
         if(metadata.hasOwnProperty(prop)) {
           if(typeof(metadata[prop]) === 'string')
-            metadata[prop] = callback(metadata[prop]);
+            metadata[prop] = callback(prop, metadata[prop]);
           else if(typeof(metadata[prop]) === 'object')
             metadata[prop] = this.metadataMap(metadata[prop], callback);
         }
       }
     }
     return metadata;
-  }
+  },
+
 }
 
 module.exports = utilities;
