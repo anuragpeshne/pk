@@ -1,4 +1,7 @@
+var fs = require('fs');
 var id3 = require('id3js');
+
+var utilities = require('./utilites.js');
 
 var reader = {
   readTags : function(filePath, callback) {
@@ -11,9 +14,18 @@ var reader = {
        );
   },
 
-  readDir : function(dirPath) {
-
-  }
+  readDir : function(dirPath, processTags, processFileName, callback) {
+    var that = this;
+    fs.readdir(dirPath, function(err, files) {
+      var newFiles = files
+                     .filter(utilities.isMP3)
+                     .map(function(song){
+                       that.readTags(dirPath + '/' + song, processTags);
+                       return processFileName(song);
+                     });
+      callback(newFiles);
+    });
+  },
 }
 
 module.exports = reader;
