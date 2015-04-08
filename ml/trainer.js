@@ -1,7 +1,8 @@
-var utilities = require('../utilites.js');
 var readlineSync = require('readline-sync');
 
-var LIB_PATH = '../trainingLibrary';
+var reader = require('../reader.js');
+var utilities = require('../utilites.js');
+var db = require('./db.js');
 
 var trainer = {
   train: function(metaTags) {
@@ -11,8 +12,18 @@ var trainer = {
     return trainedTag;
   },
 
-  trainLib: function() {
-    
+  trainLib: function(libPath) {
+    var that = this;
+    reader.readDir(libPath,
+      function(song, tags) {
+        var trainedTags = that.train(tags);
+        db.insertTrainedTags(utilities.hashify(song), trainedTags);
+      }, function(fileName) {
+        return cleaner.cleanName(fileName);
+      }, function(song, cleanFile) {
+        db.insertCleanedName(utilities.hashify(song), cleanFile);
+      }
+    );
   }
 }
 

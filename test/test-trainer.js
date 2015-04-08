@@ -1,5 +1,5 @@
 var trainer = require('../ml/trainer.js');
-
+/*
 exports.trainer = function(test) {
   var sampleTag = {
     title: 'Kaise Bataaoon [SongsKing.iN].mp3',
@@ -20,3 +20,4 @@ exports.trainer = function(test) {
   }
   test.done(); 
 }
+*/

@@ -4,12 +4,13 @@ var id3 = require('id3js');
 var utilities = require('./utilites.js');
 
 var reader = {
-  readTags : function(filePath, callback) {
+  readTags : function(dirPath, song, callback) {
+    var filePath = dirPath + '/' + song;
     id3({ file : filePath, type: id3.OPEN_LOCAL },
         function(err, tags) {
           if(err) throw err;
 
-          callback(tags);
+          callback(song, tags);
         }
        );
   },
@@ -20,7 +21,7 @@ var reader = {
       var newFiles = files
                      .filter(utilities.isMP3)
                      .map(function(song){
-                       that.readTags(dirPath + '/' + song, processTags);
+                       that.readTags(dirPath, song, processTags);
                        return processFileName(song);
                      });
       callback(newFiles);

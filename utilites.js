@@ -62,6 +62,11 @@ var utilities = {
     return metadata;
   },
 
+  hashify: function(str) {
+    // TODO: google this
+    return 'hashed';
+  },
+
 }
 
 module.exports = utilities;
