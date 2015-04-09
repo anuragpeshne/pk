@@ -99,3 +99,9 @@ exports.metadataMap = function(test) {
   test.equal(JSON.stringify(calMetadata), JSON.stringify(expectedMetaData));
   test.done();
 };
+
+exports.hashify = function(test) {
+  test.notEqual(utilities.hashify('test string').length, 0);
+  test.notEqual(utilities.hashify('random string'), utilities.hashify('str'));
+  test.done();
+}

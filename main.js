@@ -14,16 +14,7 @@ if (typeof(process.argv[2]) !== 'undefined' &&
   DEBUG = 1;
   console.log("***DEBUG MODE***");
 
-  reader.readDir( trainingLib, function(song, tags) {
-    var origTags = tags;
-    var cleanedTags = cleaner.clean(tags);
-    console.log(utilities.calDifference(origTags, cleanedTags));
-  }, function(fileName) {
-    return cleaner.cleanName(fileName);
-  }, function(cleanFile) {
-    console.log(cleanFile);
-  })
-
+  trainer.trainLib(trainingLib);
 } else {
     console.log('***PROD MODE***');
 }

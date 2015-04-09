@@ -2,12 +2,14 @@ var readlineSync = require('readline-sync');
 
 var reader = require('../reader.js');
 var utilities = require('../utilites.js');
+var cleaner = require('../cleaner.js');
 var db = require('./db.js');
 
 var trainer = {
   train: function(metaTags) {
     var trainedTag = utilities.metadataMap(metaTags, function(field, tag) {
-       return readlineSync.question(field + ':' + tag + '\n' + field + ':');
+       var ip = readlineSync.question(field + ':' + tag + '\n' + field + ':');
+       return (ip === '*') ? tag : ip;
     });
     return trainedTag;
   },
@@ -16,6 +18,7 @@ var trainer = {
     var that = this;
     reader.readDir(libPath,
       function(song, tags) {
+        console.log('Now Training:', song);
         var trainedTags = that.train(tags);
         db.insertTrainedTags(utilities.hashify(song), trainedTags);
       }, function(fileName) {
