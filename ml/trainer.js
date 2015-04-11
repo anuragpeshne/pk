@@ -7,7 +7,8 @@ var db = require('./db.js');
 
 var trainer = {
   train: function(metaTags) {
-    var trainedTag = utilities.metadataMap(metaTags, function(field, tag) {
+    var trainedTag = JSON.parse(JSON.stringify(metaTags));
+    trainedTag = utilities.metadataMap(trainedTag, function(field, tag) {
        var ip = readlineSync.question(field + ':' + tag + '\n' + field + ':');
        return (ip === '*') ? tag : ip;
     });
@@ -20,11 +21,14 @@ var trainer = {
       function(song, tags) {
         console.log('Now Training:', song);
         var trainedTags = that.train(tags);
-        db.insertTrainedTags(utilities.hashify(song), trainedTags);
+        console.log("updating ....");
+        db.updateOrigTags(utilities.hashify(song), tags);
+        db.updateOrigName(utilities.hashify(song), song);
+        db.updateTrainedTags(utilities.hashify(song), trainedTags);
       }, function(fileName) {
-        return cleaner.cleanName(fileName);
-      }, function(song, cleanFile) {
-        db.insertCleanedName(utilities.hashify(song), cleanFile);
+        var cleanedName = cleaner.cleanName(fileName);
+        db.updateTrainedName(utilities.hashify(fileName), cleanedName);
+        return cleanedName;
       }
     );
   }

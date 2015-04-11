@@ -24,7 +24,8 @@ var reader = {
                        that.readTags(dirPath, song, processTags);
                        return processFileName(song);
                      });
-      callback(newFiles);
+      if (typeof(callback) !== 'undefined')
+        callback(newFiles);
     });
   },
 }

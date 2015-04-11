@@ -1,5 +1,5 @@
 var trainer = require('../ml/trainer.js');
-/*
+
 exports.trainer = function(test) {
   var sampleTag = {
     title: 'Kaise Bataaoon [SongsKing.iN].mp3',
@@ -11,13 +11,12 @@ exports.trainer = function(test) {
       mime: 'image/jpeg',
       description: 'SongsKingArt.jpg',
     }
-  }; 
+  };
   var trainedTag = trainer.train(sampleTag);
   for (prop in sampleTag) {
     if (sampleTag.hasOwnProperty(prop)) {
       test.equal( typeof(trainedTag[prop]) !== 'undefined', true);
     }
   }
-  test.done(); 
+  test.done();
 }
-*/

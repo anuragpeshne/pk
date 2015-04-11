@@ -7,9 +7,9 @@ exports.connection = function(test) {
   });
 }
 
-exports.insertTags = function(test) {
-  db.insertTrainedTags(123, {'name': 'test'}, function(err, result) {
-    test.equal(err, null);
+exports.updateTrainedTags = function(test) {
+  db.updateTrainedTags({ _id : -112123 }, {'name': 'test2', 'id': -112123}, function(result) {
+    test.equal(parseInt(result['result'].ok) > 0, true);
     console.log("test done");
     test.done();
   });
