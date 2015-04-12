@@ -14,6 +14,31 @@ var db = {
     });
   },
 
+  find: function(query, callback) {
+    this.connect(function(err, db, connectionDone) {
+      if (err) console.log(err);
+
+      if (typeof(query) === 'undefined' || query === null || query === '')
+        query = {};
+      var TrainingTags = db.collection('TrainingTags');
+
+      TrainingTags.find(query, function(err, songs) {
+        if (err) console.log(err);
+
+        songs.each(function(err, song) {
+          if (err) console.log(err);
+
+          if (song == null)
+            connectionDone();
+          else {
+            callback(song);
+          }
+        })
+      });
+
+    });
+  },
+
   updateDb: function(hash, updateItem, operationDone) {
     hash = {_id : hash};
     updateItem = { $set: updateItem };
@@ -50,8 +75,12 @@ var db = {
   },
 
   updateOrigName: function(hash, name, operationDone) {
-    this.updateDb(hash, { origName: name}, operationDone);
+    this.updateDb(hash, { origName: name }, operationDone);
   },
+
+  updateTagScore: function(hash, tagScore, operationDone) {
+    this.updateDb(hash, { tagScore: tagScore }, operationDone);
+  }
 }
 
 module.exports = db;

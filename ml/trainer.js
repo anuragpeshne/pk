@@ -31,7 +31,20 @@ var trainer = {
         return cleanedName;
       }
     );
-  }
+  },
+
+  evalDb: function(evalFunction) {
+    var that = this;
+    db.find({},     //for all songs
+      function(song) {
+        db.updateTagScore(
+          song._id,
+          utilities.calDifference(cleaner.clean(song.origTags), song.trainedTags),
+          function() {}
+        );
+      }
+    );
+  },
 }
 
 module.exports = trainer;
