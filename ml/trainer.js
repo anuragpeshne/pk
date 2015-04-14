@@ -39,11 +39,25 @@ var trainer = {
       function(song) {
         db.updateTagScore(
           song._id,
-          utilities.calDifference(cleaner.clean(song.origTags), song.trainedTags),
+          utilities.calDifference(
+            cleaner.clean(song.origTags),
+            song.trainedTags
+          ),
           function() {}
         );
       }
     );
+  },
+
+  strDiff: function(str1, str2) {
+    if (str2.length > str1.length)
+      return this.strDiff(str2, str1);
+
+    var matchPoint = str1.search(str2);
+    return {
+      trailingText: str1.substring(0, matchPoint),
+      followText: str1.substring(matchPoint + str2.length, str1.length)
+    }
   },
 }
 

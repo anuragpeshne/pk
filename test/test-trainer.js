@@ -1,5 +1,6 @@
 var trainer = require('../ml/trainer.js');
 
+
 exports.trainer = function(test) {
   var sampleTag = {
     title: 'Kaise Bataaoon [SongsKing.iN].mp3',
@@ -18,5 +19,15 @@ exports.trainer = function(test) {
       test.equal( typeof(trainedTag[prop]) !== 'undefined', true);
     }
   }
+  test.done();
+}
+
+exports.strDiff = function(test) {
+  var str1 = '01 Kaise Bataaoon [SongsKing.iN].mp3';
+  var str2 = 'Kaise Bataaoon';
+  var diff = trainer.strDiff(str1, str2);
+  console.log(diff);
+  test.equal(diff.trailingText, '01 ');
+  test.equal(diff.followText, ' [SongsKing.iN].mp3');
   test.done();
 }
