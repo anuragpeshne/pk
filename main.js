@@ -14,7 +14,8 @@ if (typeof(process.argv[2]) !== 'undefined' &&
   DEBUG = 1;
   console.log("***DEBUG MODE***");
 
-  trainer.trainLib(trainingLib);
+//  trainer.trainLib(trainingLib);
+  trainer.evalDb();
 } else {
     console.log('***PROD MODE***');
 }

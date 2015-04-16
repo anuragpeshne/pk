@@ -14,7 +14,7 @@ var db = {
     });
   },
 
-  find: function(query, callback) {
+  find: function(query, fields, callback) {
     this.connect(function(err, db, connectionDone) {
       if (err) console.log(err);
 
@@ -22,7 +22,7 @@ var db = {
         query = {};
       var TrainingTags = db.collection('TrainingTags');
 
-      TrainingTags.find(query, function(err, songs) {
+      TrainingTags.find(query, fields, function(err, songs) {
         if (err) console.log(err);
 
         songs.each(function(err, song) {
@@ -55,11 +55,28 @@ var db = {
           if (typeof(operationDone) !== 'undefined') {
             operationDone(result);
           }
-
         }
       );
     });
+  },
 
+  updateDiff: function(hash, field, diff, operationDone) {
+    hash = { _id: hash };
+    this.connect(function (err, db, connectionDone) {
+      if (err) console.log(err);
+
+      var fieldCollection = db.collection(field);
+      fieldCollection.update(
+        hash,
+        diff,
+        { upsert: true },
+        function (err, result) {
+          connectionDone(err, result);
+          if (typeof(operationDone) !== 'undefined') {
+            operationDone(err, result);
+          }
+      });
+    });
   },
 
   updateTrainedTags: function(hash, tags, operationDone) {

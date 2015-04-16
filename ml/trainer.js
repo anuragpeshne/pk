@@ -55,10 +55,44 @@ var trainer = {
 
     var matchPoint = str1.search(str2);
     return {
-      trailingText: str1.substring(0, matchPoint),
-      followText: str1.substring(matchPoint + str2.length, str1.length)
+      prefix: str1.substring(0, matchPoint),
+      suffix: str1.substring(matchPoint + str2.length, str1.length)
     }
   },
+
+  populateSuffixes: function(interestingFields, operationDone) {
+    var selectProp = interestingFields.reduce(function (prev, cur) {
+      prev[cur] = 1;
+      return prev;
+    }, {});
+    var that = this;
+
+    db.find(
+      {},   //for all songs
+      { origName: 1, origTags: 1, trainedTags: 1 },
+      function(song) {
+        var i;
+        for (i = 0; i < interestingFields.length; i++) {
+          if (typeof song.origTags[interestingFields[i]] !== 'undefined') {
+            var diff = that.strDiff (
+              song.origTags[interestingFields[i]],
+              song.trainedTags[interestingFields[i]]
+            );
+
+            if (diff.prefix != '' || diff.suffix != '') {
+              db.updateDiff(
+                utilities.hashify(song.origName),
+                interestingFields[i],
+                diff
+              );
+            }
+          }
+        }
+      }
+    );
+  },
+
+
 }
 
 module.exports = trainer;
